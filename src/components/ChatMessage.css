@@ -1,0 +1,30 @@
+.ai-message {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 18px;
+}
+
+.user-message {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 18px;
+}
+
+.message {
+    max-width: 420px;
+    background: white;
+    padding: 18px;
+    border-radius: 20px;
+    border-top-left-radius: 6px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
+.user-bubble {
+    max-width: 420px;
+    background: #4F46E5;
+    color: white;
+    padding: 18px;
+    border-radius: 20px;
+    border-top-right-radius: 6px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}

@@ -1,0 +1,73 @@
+.welcome-container {
+  max-width: 850px;
+  margin: 60px auto;
+  padding: 60px 50px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 30px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(37, 99, 235, 0.15);
+  backdrop-filter: blur(15px);
+  animation: fadeIn 0.8s ease;
+}
+
+.welcome-avatar {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 55px;
+  color: white;
+  box-shadow: 0 15px 40px rgba(37, 99, 235, 0.25);
+}
+
+.welcome-container h1 {
+  color: #1e293b;
+  margin-bottom: 10px;
+}
+
+.welcome-container h2 {
+  color: #2563eb;
+  margin-bottom: 30px;
+  font-weight: 500;
+}
+
+.welcome-container p {
+  color: #64748b;
+  font-size: 18px;
+  line-height: 1.8;
+  margin-bottom: 15px;
+}
+
+.begin-btn {
+  margin-top: 35px;
+  padding: 16px 45px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.begin-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(37, 99, 235, 0.3);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
