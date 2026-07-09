@@ -1,0 +1,13 @@
+.layout{
+    min-height:100vh;
+    background:linear-gradient(
+        135deg,
+        var(--bg-primary),
+        #111827,
+        #0f172a
+    );
+
+    color:var(--text-primary);
+
+    padding:30px;
+}

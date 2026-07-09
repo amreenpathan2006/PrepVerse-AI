@@ -1,0 +1,107 @@
+.ai-interviewer{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:18px;
+}
+
+.avatar-container{
+
+    width:320px;
+
+    height:420px;
+
+    border-radius:28px;
+
+    background:linear-gradient(
+        145deg,
+        var(--bg-card),
+        var(--bg-secondary)
+    );
+
+    border:2px solid var(--primary);
+
+    box-shadow:var(--purple-glow);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    animation:float 5s ease-in-out infinite;
+}
+
+.avatar-placeholder{
+
+    width:220px;
+
+    height:220px;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:32px;
+
+    font-weight:700;
+
+    color:white;
+}
+
+.status{
+
+    color:var(--secondary);
+
+    font-weight:600;
+}
+.avatar-container.speaking{
+
+    animation:pulseGlow 1.2s infinite;
+}
+
+.avatar-container.listening{
+
+    border-color:var(--secondary);
+
+    box-shadow:var(--cyan-glow);
+}
+
+.avatar-container.thinking{
+
+    opacity:.8;
+}
+
+.status.ready{
+
+    color:var(--success);
+}
+
+.status.speaking{
+
+    color:var(--primary-light);
+}
+
+.status.listening{
+
+    color:var(--secondary);
+}
+
+.status.thinking{
+
+    color:var(--warning);
+}

@@ -1,0 +1,82 @@
+.interview-room{
+    display:grid;
+    grid-template-columns:1.8fr 1fr;
+    gap:24px;
+    min-height:80vh;
+}
+
+.interviewer-panel{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.conversation-panel{
+    display:flex;
+    flex-direction:column;
+}
+
+.conversation-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.conversation-body{
+    flex:1;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:20px;
+    color:var(--text-secondary);
+}
+.message{
+
+    padding:18px;
+
+    border-radius:16px;
+
+    margin-bottom:18px;
+
+}
+
+.message.ai{
+
+    background:rgba(124,58,237,.18);
+
+}
+
+.message.user{
+
+    background:rgba(34,211,238,.12);
+
+}
+
+.message strong{
+
+    display:block;
+
+    margin-bottom:10px;
+
+}
+
+.conversation-footer{
+
+    margin-top:20px;
+
+}
+
+.mic-placeholder{
+
+    border:2px dashed var(--secondary);
+
+    border-radius:14px;
+
+    padding:18px;
+
+    text-align:center;
+
+    color:var(--secondary);
+
+    font-weight:600;
+}

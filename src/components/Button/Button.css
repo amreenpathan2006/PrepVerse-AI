@@ -1,0 +1,42 @@
+.pv-button {
+  border: none;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Primary Button */
+.pv-button.primary {
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-light)
+  );
+
+  color: white;
+
+  box-shadow: var(--purple-glow);
+}
+
+/* Secondary Button */
+.pv-button.secondary {
+  background: transparent;
+
+  color: var(--secondary);
+
+  border: 2px solid var(--secondary);
+}
+
+/* Hover Effect */
+.pv-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Disabled */
+.pv-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

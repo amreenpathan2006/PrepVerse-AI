@@ -1,0 +1,30 @@
+:root{
+
+  /* Backgrounds */
+  --bg-primary:#0B1020;
+  --bg-secondary:#151C33;
+  --bg-card:#1B2340;
+
+  /* Brand Colors */
+  --primary:#7C3AED;
+  --primary-light:#8B5CF6;
+  --secondary:#22D3EE;
+
+  /* Text */
+  --text-primary:#FFFFFF;
+  --text-secondary:#CBD5E1;
+  --text-muted:#94A3B8;
+
+  /* Status */
+  --success:#10B981;
+  --warning:#F59E0B;
+  --danger:#EF4444;
+
+  /* Borders */
+  --border:rgba(255,255,255,.08);
+
+  /* Glow */
+  --purple-glow:0 0 30px rgba(124,58,237,.35);
+  --cyan-glow:0 0 30px rgba(34,211,238,.35);
+
+}
