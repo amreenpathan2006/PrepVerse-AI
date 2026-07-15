@@ -1,13 +1,26 @@
 .layout{
-    min-height:100vh;
-    background:linear-gradient(
-        135deg,
-        var(--bg-primary),
-        #111827,
-        #0f172a
-    );
+    position: relative;
+    min-height: 100vh;
 
-    color:var(--text-primary);
+    padding: 30px;
 
-    padding:30px;
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at top left,
+            rgba(124,58,237,0.20),
+            transparent 35%),
+
+        radial-gradient(circle at bottom right,
+            rgba(6,182,212,0.18),
+            transparent 35%),
+
+        linear-gradient(
+            135deg,
+            var(--bg-primary),
+            #111827,
+            #0f172a
+        );
+
+    color: var(--text-primary);
 }

@@ -30,34 +30,23 @@
     padding:20px;
     color:var(--text-secondary);
 }
-.message{
-
-    padding:18px;
-
-    border-radius:16px;
-
-    margin-bottom:18px;
-
+.conversation-message {
+    padding: 18px;
+    border-radius: 16px;
+    margin-bottom: 18px;
 }
 
-.message.ai{
-
-    background:rgba(124,58,237,.18);
-
+.conversation-message.ai {
+    background: rgba(124,58,237,.18);
 }
 
-.message.user{
-
-    background:rgba(34,211,238,.12);
-
+.conversation-message.user {
+    background: rgba(34,211,238,.12);
 }
 
-.message strong{
-
-    display:block;
-
-    margin-bottom:10px;
-
+.conversation-message strong {
+    display: block;
+    margin-bottom: 10px;
 }
 
 .conversation-footer{

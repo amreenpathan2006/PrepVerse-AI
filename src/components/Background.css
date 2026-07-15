@@ -1,0 +1,39 @@
+.background-wrapper {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: -1;
+  background:
+    radial-gradient(circle at top, #1a2242 0%, #0b1020 45%, #05070d 100%);
+}
+
+.gradient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.45;
+}
+
+.orb1 {
+  width: 420px;
+  height: 420px;
+  background: #5b6cff;
+  top: -100px;
+  left: -80px;
+}
+
+.orb2 {
+  width: 350px;
+  height: 350px;
+  background: #8a5cff;
+  right: -100px;
+  top: 120px;
+}
+
+.orb3 {
+  width: 320px;
+  height: 320px;
+  background: #00c2ff;
+  bottom: -120px;
+  left: 40%;
+}

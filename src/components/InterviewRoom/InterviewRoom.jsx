@@ -20,7 +20,7 @@ function InterviewRoom() {
 
         <div className="conversation-body">
 
-  <div className="message ai">
+  <div className="conversation-message ai">
 
     <strong>Amreen</strong>
 
@@ -32,7 +32,7 @@ function InterviewRoom() {
 
   </div>
 
-  <div className="message user">
+  <div className="conversation-message user">
 
     <strong>You</strong>
 

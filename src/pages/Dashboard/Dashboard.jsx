@@ -1,8 +1,10 @@
+import Layout from "../../components/Layout/Layout";
 import DashboardCards from "./DashboardCards/DashboardCards";
 import "./Dashboard.css";
 
 function Dashboard() {
-  return (
+ return (
+  <Layout>
     <div className="dashboard">
 
       <div className="dashboard-header">
@@ -76,7 +78,7 @@ function Dashboard() {
       </div>
 
     </div>
-  );
+  </Layout>
+);
 }
-
 export default Dashboard;
