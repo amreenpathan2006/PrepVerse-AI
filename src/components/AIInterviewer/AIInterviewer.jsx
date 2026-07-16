@@ -1,51 +1,14 @@
 import "./AIInterviewer.css";
+import InterviewerCard from "../Avatar/InterviewerCard";
+import InterviewControls from "../InterviewControls/InterviewControls";
 
-function AIInterviewer({
-
-    state = "ready"
-
-}) {
-
-    const statusText = {
-
-        ready: "Ready to Interview",
-
-        speaking: "Speaking...",
-
-        listening: "Listening...",
-
-        thinking: "Thinking..."
-
-    };
-
-    return (
-
-        <div className="ai-interviewer">
-
-            <div className={`avatar-container ${state}`}>
-
-                <div className="avatar-placeholder">
-
-                    AMREEN
-
-                </div>
-
-            </div>
-
-            <h2>Amreen</h2>
-
-            <p>Senior Technical Interviewer</p>
-
-            <div className={`status ${state}`}>
-
-                ● {statusText[state]}
-
-            </div>
-
-        </div>
-
-    );
-
+function AIInterviewer() {
+  return (
+    <div className="ai-interviewer">
+      <InterviewerCard />
+      <InterviewControls />
+    </div>
+  );
 }
 
 export default AIInterviewer;

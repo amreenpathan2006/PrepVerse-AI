@@ -1,0 +1,62 @@
+.interview-controls{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+    width:100%;
+    margin-top:30px;
+}
+
+.control-btn{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    gap:8px;
+
+    padding:18px;
+
+    border:none;
+    border-radius:16px;
+
+    cursor:pointer;
+
+    background:rgba(255,255,255,.06);
+
+    color:white;
+
+    transition:.3s;
+}
+
+.control-btn:hover{
+    transform:translateY(-3px);
+    background:rgba(255,255,255,.12);
+}
+
+.control-btn span{
+    font-size:14px;
+    font-weight:600;
+}
+
+.control-btn.mic{
+    border:1px solid #06b6d4;
+}
+
+.control-btn.speaker{
+    border:1px solid #8b5cf6;
+}
+
+.control-btn.pause{
+    border:1px solid #f59e0b;
+}
+
+.control-btn.end{
+    border:1px solid #ef4444;
+}
+.control-btn.active {
+    background: rgba(6, 182, 212, 0.15);
+}
+
+.control-btn.inactive {
+    background: rgba(239, 68, 68, 0.15);
+}
