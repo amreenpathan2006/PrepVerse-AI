@@ -1,0 +1,68 @@
+.voice-controls{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top:24px;
+}
+
+.mic-btn{
+    width:90px;
+    height:90px;
+
+    border:none;
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#6C63FF,#00D4FF);
+
+    color:white;
+
+    font-size:18px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:
+        0 0 20px rgba(108,99,255,.35);
+}
+.mic-icon{
+    font-size:34px;
+    color:white;
+    transition:.3s;
+}
+
+.mic-btn:hover{
+    transform:scale(1.05);
+}
+
+.mic-btn:active{
+    transform:scale(.95);
+}
+
+.mic-btn.listening{
+    animation:pulse 1.4s infinite;
+
+    box-shadow:
+        0 0 18px rgba(0,212,255,.45),
+        0 0 45px rgba(108,99,255,.35);
+}
+
+@keyframes pulse{
+
+    0%{
+        box-shadow:
+        0 0 0 0 rgba(0,212,255,.6);
+    }
+
+    70%{
+        box-shadow:
+        0 0 0 22px rgba(0,212,255,0);
+    }
+
+    100%{
+        box-shadow:
+        0 0 0 0 rgba(0,212,255,0);
+    }
+
+}
