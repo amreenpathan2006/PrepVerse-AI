@@ -1,35 +1,26 @@
-import { useState } from "react";
 import "./InterviewControls.css";
 
-function InterviewControls() {
-
-  const [micOn, setMicOn] = useState(true);
-
+function InterviewControls({
+  isPaused,
+  onTogglePause,
+  onEndInterview,
+}) {
   return (
     <div className="interview-controls">
 
       <button
-        className={`control-btn mic ${micOn ? "active" : "inactive"}`}
-        onClick={() => setMicOn(!micOn)}
+        className="control-btn pause-btn"
+        onClick={onTogglePause}
       >
-        {micOn ? "🎤" : "🔇"}
-        <span>{micOn ? "Mic On" : "Mic Off"}</span>
+        {isPaused ? "▶ Resume" : "⏸ Pause"}
       </button>
 
-      <button className="control-btn speaker">
-        🔊
-        <span>Speaker</span>
-      </button>
-
-      <button className="control-btn pause">
-        ⏸
-        <span>Pause</span>
-      </button>
-
-      <button className="control-btn end">
-        ❌
-        <span>End</span>
-      </button>
+      <button
+  className="control-btn end-btn"
+  onClick={onEndInterview}
+>
+  ⏹ End Interview
+</button>
 
     </div>
   );

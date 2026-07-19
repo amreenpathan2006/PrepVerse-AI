@@ -62,6 +62,10 @@
     color:#22c55e;
 
     font-weight:600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 @keyframes pulse{
@@ -71,4 +75,47 @@
     50%{transform:scale(1.05);}
 
     100%{transform:scale(1);}
+}
+.status-indicator {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    display: inline-block;
+
+    background: currentColor;
+}
+
+.interviewer-card.speaking .avatar-circle {
+    animation: avatarSpeaking 1.5s infinite;
+}
+
+@keyframes avatarSpeaking {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.04);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+.interviewer-card.ready .status-pill {
+    color: #22c55e;
+}
+
+.interviewer-card.speaking .status-pill {
+    color: #a78bfa;
+}
+
+.interviewer-card.listening .status-pill {
+    color: #22d3ee;
+}
+
+.interviewer-card.thinking .status-pill {
+    color: #facc15;
 }

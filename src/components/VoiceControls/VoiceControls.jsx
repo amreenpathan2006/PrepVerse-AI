@@ -9,6 +9,18 @@ function VoiceControls({
   return (
     <div className="voice-controls">
 
+      {!isMuted && (
+  <div className="voice-waveform">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+)}
+
       <button
         className={`mic-btn ${isListening ? "listening" : ""}`}
         onClick={onToggleMute}

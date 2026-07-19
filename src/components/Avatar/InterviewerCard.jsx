@@ -1,9 +1,35 @@
 import "./InterviewerCard.css";
 
-function InterviewerCard() {
-  return (
-    <div className="interviewer-card">
+function InterviewerCard({ state = "ready" }) {
+  const statusConfig = {
+    ready: {
+      label: "Ready to Interview",
+      className: "ready",
+    },
 
+    speaking: {
+      label: "Amreen is Speaking",
+      className: "speaking",
+    },
+
+    listening: {
+      label: "Listening to You",
+      className: "listening",
+    },
+
+    thinking: {
+      label: "Thinking...",
+      className: "thinking",
+    },
+  };
+
+  const currentStatus =
+    statusConfig[state] || statusConfig.ready;
+
+  return (
+    <div
+      className={`interviewer-card ${currentStatus.className}`}
+    >
       <div className="avatar-display">
         <div className="avatar-circle">
           AI
@@ -15,9 +41,10 @@ function InterviewerCard() {
       <p>Senior AI Interviewer</p>
 
       <div className="status-pill">
-        🟢 Ready to Interview
-      </div>
+        <span className="status-indicator"></span>
 
+        {currentStatus.label}
+      </div>
     </div>
   );
 }
