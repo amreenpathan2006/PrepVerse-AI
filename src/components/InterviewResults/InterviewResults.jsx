@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import "./InterviewResults.css";
 
 function InterviewResults() {
+    const navigate = useNavigate();
   return (
     <div className="interview-results">
 
@@ -33,13 +35,19 @@ function InterviewResults() {
 
       <div className="results-actions">
 
-        <button className="review-btn">
-          Review Interview
-        </button>
+       <button
+  className="review-btn"
+  onClick={() => navigate("/interview-review")}
+>
+  Review Interview
+</button>
 
-        <button className="dashboard-btn">
-          Back to Dashboard
-        </button>
+        <button
+  className="dashboard-btn"
+  onClick={() => navigate("/dashboard")}
+>
+  Back to Dashboard
+</button>
 
       </div>
 

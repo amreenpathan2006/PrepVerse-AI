@@ -1,8 +1,10 @@
-import Layout from "../../components/Layout/Layout";
+
+import { useNavigate } from "react-router-dom";import Layout from "../../components/Layout/Layout";
 import DashboardCards from "./DashboardCards/DashboardCards";
 import "./Dashboard.css";
 
 function Dashboard() {
+  const navigate = useNavigate();
  return (
   <Layout>
     <div className="dashboard">
@@ -13,9 +15,12 @@ function Dashboard() {
           <p>Let's continue your interview preparation.</p>
         </div>
 
-        <button className="start-btn">
-          + Start New Interview
-        </button>
+        <button
+  className="start-btn"
+  onClick={() => navigate("/interview")}
+>
+  + Start New Interview
+</button>
       </div>
 
       <div className="stats">
