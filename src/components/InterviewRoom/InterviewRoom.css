@@ -164,3 +164,24 @@
 .interview-room.paused .mic-btn {
     filter: grayscale(0.4);
 }
+.next-question-button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.next-question-button:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.next-question-button:active {
+  transform: translateY(0);
+}

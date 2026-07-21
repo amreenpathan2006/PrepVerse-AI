@@ -1,6 +1,11 @@
 import "./InterviewReview.css";
 
 function InterviewReview() {
+   const interviewSession = JSON.parse(
+    sessionStorage.getItem("interviewSession")
+  );
+
+  const answers = interviewSession?.answers || [];
   return (
     <div className="interview-review">
 
@@ -147,40 +152,46 @@ function InterviewReview() {
 
       <div className="question-review">
 
-        <h2>📝 Question Review</h2>
+  <h2>📝 Question Review</h2>
 
-        <div className="question-card">
+  {answers.map((item, index) => (
 
-          <div className="question-header">
+    <div
+      className="question-card"
+      key={item.questionId}
+    >
 
-            <span>Question 1</span>
+      <div className="question-header">
 
-            <span className="question-status">
-              Completed
-            </span>
+        <span>
+          Question {index + 1}
+        </span>
 
-          </div>
+        <span className="question-status">
+          Completed
+        </span>
 
-          <h3>
-            Tell me about yourself.
-          </h3>
+      </div>
 
-          <div className="answer-box">
+      <h3>
+        {item.question}
+      </h3>
 
-            <span>Your Answer</span>
+      <div className="answer-box">
 
-            <p>
-              Your recorded answer will appear here after
-              speech-to-text processing is connected.
-            </p>
+        <span>Your Answer</span>
 
-          </div>
-
-        </div>
+        <p>
+          {item.answer}
+        </p>
 
       </div>
 
     </div>
+
+  ))}
+     </div>
+</div>
   );
 }
 

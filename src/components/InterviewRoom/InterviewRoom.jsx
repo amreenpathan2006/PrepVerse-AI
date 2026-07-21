@@ -6,11 +6,19 @@ import AIInterviewer from "../AIInterviewer/AIInterviewer";
 import VoiceControls from "../VoiceControls/VoiceControls";
 import EndInterviewModal from "../EndInterviewModal/EndInterviewModal";
 import InterviewResults from "../InterviewResults/InterviewResults";
+import interviewQuestions from "../data/interviewQuestions";
 
 function InterviewRoom() {
   // -----------------------------
   // State
   // -----------------------------
+  const [interviewSession, setInterviewSession] = useState({
+  interviewType: "Frontend Developer Interview",
+  totalQuestions: interviewQuestions.length,
+  startTime: new Date(),
+  endTime: null,
+  answers: [],
+});
   const [isMuted, setIsMuted] = useState(false);
   const [isListening, setIsListening] = useState(true);
   const [status, setStatus] = useState("Listening");
@@ -41,6 +49,7 @@ function InterviewRoom() {
     setShowEndConfirmation(false);
     setIsInterviewEnded(true);
   };
+  
 
   // -----------------------------
   // Timer
@@ -61,6 +70,7 @@ function InterviewRoom() {
 
     return () => clearInterval(timer);
   }, [isPaused, isInterviewEnded]);
+  
 
   // -----------------------------
   // Time Formatting
@@ -71,17 +81,65 @@ function InterviewRoom() {
   // -----------------------------
   // Question Progress
   // -----------------------------
-  const [currentQuestion] = useState(1);
-  const [totalQuestions] = useState(10);
+  
+  const [currentQuestion, setCurrentQuestion] = useState(1);
 
-  const progress = (currentQuestion / totalQuestions) * 100;
+const totalQuestions = interviewQuestions.length;
 
+const currentQuestionData =
+  interviewQuestions[currentQuestion - 1];
+
+const progress =
+  (currentQuestion / totalQuestions) * 100;
+
+const handleNextQuestion = () => {
+  const currentQuestionData =
+    interviewQuestions[currentQuestion - 1];
+
+  const newAnswer = {
+    questionId: currentQuestionData.id,
+    question: currentQuestionData.question,
+    answer: "Demo user response",
+  };
+
+
+  setInterviewSession((prev) => ({
+    ...prev,
+    answers: [...prev.answers, newAnswer],
+  }));
+
+  if (currentQuestion < totalQuestions) {
+    setCurrentQuestion((prev) => prev + 1);
+  } else {
+    const completedSession = {
+  ...interviewSession,
+  answers: [
+    ...interviewSession.answers,
+    newAnswer,
+  ],
+  endTime: new Date(),
+};
+
+sessionStorage.setItem(
+  "interviewSession",
+  JSON.stringify(completedSession)
+);
+
+setInterviewSession(completedSession);
+setIsInterviewEnded(true);
+    console.log("Current Interview Session:", interviewSession);
+  }
+};
   // -----------------------------
   // Results Screen
   // -----------------------------
-  if (isInterviewEnded) {
-    return <InterviewResults />;
-  }
+ if (isInterviewEnded) {
+  return (
+    <InterviewResults
+      interviewSession={interviewSession}
+    />
+  );
+}
 
   // -----------------------------
   // Interview Room
@@ -142,7 +200,7 @@ function InterviewRoom() {
               Hello! Welcome to PrepVerse AI.
               <br />
               <br />
-              Tell me about yourself.
+              {currentQuestionData.question}
             </p>
 
           </div>
@@ -174,12 +232,20 @@ function InterviewRoom() {
                 ? "Microphone Muted"
                 : status}
             </div>
-
-            <VoiceControls
-              isMuted={isMuted}
-              isListening={isListening}
-              onToggleMute={handleToggleMute}
-            />
+              <VoiceControls
+                isMuted={isMuted}
+               isListening={isListening}
+               onToggleMute={handleToggleMute}
+             />
+             <button
+                 className="next-question-button"
+                  onClick={handleNextQuestion}
+                      >
+                {currentQuestion === totalQuestions
+                ? "Finish Interview"
+                : "Submit Answer & Continue"}
+              </button>
+           
 
           </div>
 
