@@ -17,7 +17,7 @@ function Dashboard() {
 
         <button
   className="start-btn"
-  onClick={() => navigate("/interview")}
+  onClick={() => navigate("/profile-setup")}
 >
   + Start New Interview
 </button>
