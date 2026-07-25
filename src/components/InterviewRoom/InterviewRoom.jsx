@@ -24,7 +24,6 @@ function InterviewRoom() {
   const [status, setStatus] = useState("Listening");
 
   const aiState = isMuted ? "ready" : "listening";
-
   const [timeLeft, setTimeLeft] = useState(15 * 60);
   const [isPaused, setIsPaused] = useState(false);
   const [showEndConfirmation, setShowEndConfirmation] = useState(false);
@@ -46,9 +45,21 @@ function InterviewRoom() {
   };
 
   const handleConfirmEndInterview = () => {
-    setShowEndConfirmation(false);
-    setIsInterviewEnded(true);
+  setShowEndConfirmation(false);
+
+  const completedSession = {
+    ...interviewSession,
+    endTime: new Date(),
   };
+
+  sessionStorage.setItem(
+    "interviewSession",
+    JSON.stringify(completedSession)
+  );
+
+  setInterviewSession(completedSession);
+  setIsInterviewEnded(true);
+};
   
 
   // -----------------------------

@@ -1,6 +1,8 @@
 import "./InterviewReview.css";
+import { useNavigate } from "react-router-dom";
 
 function InterviewReview() {
+   const navigate = useNavigate();
    const interviewSession = JSON.parse(
     sessionStorage.getItem("interviewSession")
   );
@@ -191,6 +193,25 @@ function InterviewReview() {
 
   ))}
      </div>
+      {/* Navigation Actions */}
+
+      <div className="review-actions">
+
+        <button
+          className="review-action-button secondary"
+          onClick={() => navigate("/dashboard")}
+        >
+          ← Back to Dashboard
+        </button>
+
+        <button
+          className="review-action-button primary"
+          onClick={() => navigate("/profile-setup")}
+        >
+          Start New Interview →
+        </button>
+
+      </div>
 </div>
   );
 }

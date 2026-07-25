@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./ManualProfile.css";
-
+import {
+    getSavedProfile,
+    saveProfile
+} from "../../utils/profileStorage";
 function ManualProfile() {
+    const navigate = useNavigate();
     const [isStarted, setIsStarted] = useState(false);
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [isCompleted, setIsCompleted] = useState(false);
@@ -17,6 +22,13 @@ const [showSummary, setShowSummary] = useState(false);
         certifications: "",
         careerGoals: ""
     });
+   useEffect(() => {
+    const savedProfile = getSavedProfile();
+
+    if (savedProfile) {
+        setProfileData(savedProfile);
+    }
+}, []);
 
     const questions = [
         {
@@ -187,9 +199,13 @@ const [showSummary, setShowSummary] = useState(false);
 
         <button
             className="manual-profile-button"
-            onClick={() => {
-                console.log("Final Profile:", profileData);
-            }}
+          onClick={() => {
+    saveProfile(profileData);
+
+    console.log("Final Profile:", profileData);
+
+    navigate("/interview");
+}}
         >
             Confirm Profile ✓
         </button>
