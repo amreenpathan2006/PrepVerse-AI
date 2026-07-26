@@ -51,25 +51,30 @@ const seconds = String(
         </div>
 
       </div>
+        <div className="results-actions">
 
-      <div className="results-actions">
+  <button
+    className="review-btn"
+    onClick={() => navigate("/interview-review")}
+  >
+    Review Interview
+  </button>
 
-       <button
-  className="review-btn"
-  onClick={() => navigate("/interview-review")}
->
-  Review Interview
-</button>
+  <button
+    className="next-level-btn"
+    onClick={() => navigate("/level-selection")}
+  >
+    Continue to Next Level →
+  </button>
 
-        <button
-  className="dashboard-btn"
-  onClick={() => navigate("/dashboard")}
->
-  Back to Dashboard
-</button>
+  <button
+    className="dashboard-btn"
+    onClick={() => navigate("/dashboard")}
+  >
+    Back to Dashboard
+  </button>
 
-      </div>
-
+</div>
     </div>
   );
 }

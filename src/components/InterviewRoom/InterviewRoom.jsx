@@ -6,14 +6,26 @@ import AIInterviewer from "../AIInterviewer/AIInterviewer";
 import VoiceControls from "../VoiceControls/VoiceControls";
 import EndInterviewModal from "../EndInterviewModal/EndInterviewModal";
 import InterviewResults from "../InterviewResults/InterviewResults";
-import interviewQuestions from "../data/interviewQuestions";
+import levelOneQuestions from "../data/interviewQuestions";
+import levelTwoQuestions from "../data/levelTwoQuestions";
 
-function InterviewRoom() {
+function InterviewRoom({ level }) {
+  const interviewQuestions =
+    level === 2
+      ? levelTwoQuestions
+      : levelOneQuestions;
+
+  // -----------------------------
+  // State
+  // -----------------------------
   // -----------------------------
   // State
   // -----------------------------
   const [interviewSession, setInterviewSession] = useState({
-  interviewType: "Frontend Developer Interview",
+  interviewType:
+  level === 1
+    ? "Confidence Builder Interview"
+    : "Professional Interview",
   totalQuestions: interviewQuestions.length,
   startTime: new Date(),
   endTime: null,
@@ -174,7 +186,11 @@ setIsInterviewEnded(true);
         <div className="conversation-header">
 
           <div className="header-left">
-            <h2>Frontend Developer Interview</h2>
+            <h2>
+  {level === 1
+    ? "Confidence Builder Interview"
+    : "Professional Interview"}
+</h2>
 
             <p>
               Question {currentQuestion} of {totalQuestions}

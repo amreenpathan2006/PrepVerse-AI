@@ -205,11 +205,11 @@ function InterviewReview() {
         </button>
 
         <button
-          className="review-action-button primary"
-          onClick={() => navigate("/profile-setup")}
-        >
-          Start New Interview →
-        </button>
+  className="review-action-button primary"
+  onClick={() => navigate("/level-selection")}
+>
+  Continue to Next Level →
+</button>
 
       </div>
 </div>
