@@ -1,23 +1,44 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./InterviewResults.css";
 
 function InterviewResults({ interviewSession }) {
-    const navigate = useNavigate();
-    const durationInSeconds =
-  interviewSession.endTime && interviewSession.startTime
-    ? Math.floor(
-        (new Date(interviewSession.endTime) -
-          new Date(interviewSession.startTime)) / 1000
-      )
-    : 0;
+  const navigate = useNavigate();
 
-const minutes = String(
-  Math.floor(durationInSeconds / 60)
-).padStart(2, "0");
+  useEffect(() => {
+    if (!interviewSession?.level) return;
 
-const seconds = String(
-  durationInSeconds % 60
-).padStart(2, "0");
+    const completedLevels = JSON.parse(
+      localStorage.getItem("completedLevels") || "[]"
+    );
+
+    if (!completedLevels.includes(interviewSession.level)) {
+      completedLevels.push(interviewSession.level);
+
+      localStorage.setItem(
+        "completedLevels",
+        JSON.stringify(completedLevels)
+      );
+    }
+  }, [interviewSession]);
+
+  const durationInSeconds =
+    interviewSession.endTime && interviewSession.startTime
+      ? Math.floor(
+          (new Date(interviewSession.endTime) -
+            new Date(interviewSession.startTime)) /
+            1000
+        )
+      : 0;
+
+  const minutes = String(
+    Math.floor(durationInSeconds / 60)
+  ).padStart(2, "0");
+
+  const seconds = String(
+    durationInSeconds % 60
+  ).padStart(2, "0");
+
   return (
     <div className="interview-results">
 
@@ -33,48 +54,60 @@ const seconds = String(
 
         <div className="result-card">
           <span className="result-value">
-  {interviewSession.answers.length} / {interviewSession.totalQuestions}
-</span>
-          <span className="result-label">Questions Answered</span>
+            {interviewSession.answers.length} /{" "}
+            {interviewSession.totalQuestions}
+          </span>
+
+          <span className="result-label">
+            Questions Answered
+          </span>
         </div>
 
         <div className="result-card">
           <span className="result-value">
-  {minutes}:{seconds}
-</span>
-          <span className="result-label">Interview Duration</span>
+            {minutes}:{seconds}
+          </span>
+
+          <span className="result-label">
+            Interview Duration
+          </span>
         </div>
 
         <div className="result-card">
           <span className="result-value">--</span>
-          <span className="result-label">Confidence Score</span>
+
+          <span className="result-label">
+            Confidence Score
+          </span>
         </div>
 
       </div>
-        <div className="results-actions">
 
-  <button
-    className="review-btn"
-    onClick={() => navigate("/interview-review")}
-  >
-    Review Interview
-  </button>
+      <div className="results-actions">
 
-  <button
-    className="next-level-btn"
-    onClick={() => navigate("/level-selection")}
-  >
-    Continue to Next Level →
-  </button>
+        <button
+          className="review-btn"
+          onClick={() => navigate("/interview-review")}
+        >
+          Review Interview
+        </button>
 
-  <button
-    className="dashboard-btn"
-    onClick={() => navigate("/dashboard")}
-  >
-    Back to Dashboard
-  </button>
+        <button
+          className="next-level-btn"
+          onClick={() => navigate("/level-selection")}
+        >
+          Continue to Next Level →
+        </button>
 
-</div>
+        <button
+          className="dashboard-btn"
+          onClick={() => navigate("/dashboard")}
+        >
+          Back to Dashboard
+        </button>
+
+      </div>
+
     </div>
   );
 }

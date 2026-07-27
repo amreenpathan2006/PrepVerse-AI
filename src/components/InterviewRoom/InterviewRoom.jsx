@@ -21,14 +21,20 @@ function InterviewRoom({ level }) {
   // -----------------------------
   // State
   // -----------------------------
-  const [interviewSession, setInterviewSession] = useState({
+ const [interviewSession, setInterviewSession] = useState({
+  level: level,
+
   interviewType:
-  level === 1
-    ? "Confidence Builder Interview"
-    : "Professional Interview",
+    level === 1
+      ? "Confidence Builder Interview"
+      : "Professional Interview",
+
   totalQuestions: interviewQuestions.length,
+
   startTime: new Date(),
+
   endTime: null,
+
   answers: [],
 });
   const [isMuted, setIsMuted] = useState(false);

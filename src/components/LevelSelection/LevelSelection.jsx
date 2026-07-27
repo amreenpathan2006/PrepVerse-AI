@@ -5,18 +5,18 @@ import "./LevelSelection.css";
 function LevelSelection() {
   const navigate = useNavigate();
 
-  const handleLevelSelect = (level) => {
-    if (level === 1) {
-      navigate("/interview", {
-        state: { level: 1 },
-      });
-    }
+  const completedLevels = JSON.parse(
+    localStorage.getItem("completedLevels") || "[]"
+  );
 
-    if (level === 2) {
-      navigate("/interview", {
-        state: { level: 2 },
-      });
-    }
+  const isLevelCompleted = (level) => {
+    return completedLevels.includes(level);
+  };
+
+  const handleLevelSelect = (level) => {
+    navigate("/interview", {
+      state: { level },
+    });
   };
 
   return (
@@ -42,8 +42,12 @@ function LevelSelection() {
 
             <div className="level-content">
 
-              <span className="level-status available">
-                AVAILABLE
+              <span
+                className={`level-status ${
+                  isLevelCompleted(1) ? "completed" : "available"
+                }`}
+              >
+                {isLevelCompleted(1) ? "COMPLETED" : "AVAILABLE"}
               </span>
 
               <h2>Confidence Builder</h2>
@@ -63,7 +67,9 @@ function LevelSelection() {
                 className="level-button"
                 onClick={() => handleLevelSelect(1)}
               >
-                Start Level 1 →
+                {isLevelCompleted(1)
+                  ? "Practice Again →"
+                  : "Start Level 1 →"}
               </button>
 
             </div>
@@ -77,8 +83,12 @@ function LevelSelection() {
 
             <div className="level-content">
 
-              <span className="level-status available">
-                AVAILABLE
+              <span
+                className={`level-status ${
+                  isLevelCompleted(2) ? "completed" : "available"
+                }`}
+              >
+                {isLevelCompleted(2) ? "COMPLETED" : "AVAILABLE"}
               </span>
 
               <h2>Professional Interview</h2>
@@ -98,7 +108,9 @@ function LevelSelection() {
                 className="level-button"
                 onClick={() => handleLevelSelect(2)}
               >
-                Start Level 2 →
+                {isLevelCompleted(2)
+                  ? "Practice Again →"
+                  : "Start Level 2 →"}
               </button>
 
             </div>
