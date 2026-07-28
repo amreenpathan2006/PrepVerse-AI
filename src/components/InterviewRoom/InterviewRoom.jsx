@@ -8,13 +8,15 @@ import EndInterviewModal from "../EndInterviewModal/EndInterviewModal";
 import InterviewResults from "../InterviewResults/InterviewResults";
 import levelOneQuestions from "../data/interviewQuestions";
 import levelTwoQuestions from "../data/levelTwoQuestions";
+import { generateQuestions } from "../../utils/questionGenerator";
 
 function InterviewRoom({ level }) {
-  const interviewQuestions =
-    level === 2
-      ? levelTwoQuestions
-      : levelOneQuestions;
+ const baseQuestions =
+  level === 2
+    ? levelTwoQuestions
+    : levelOneQuestions;
 
+const interviewQuestions = generateQuestions(baseQuestions);
   // -----------------------------
   // State
   // -----------------------------
@@ -118,18 +120,27 @@ const totalQuestions = interviewQuestions.length;
 const currentQuestionData =
   interviewQuestions[currentQuestion - 1];
 
+const completedQuestions = currentQuestion - 1;
+
+const remainingQuestions =
+  totalQuestions - completedQuestions;
+
 const progress =
-  (currentQuestion / totalQuestions) * 100;
+  (completedQuestions / totalQuestions) * 100;
 
 const handleNextQuestion = () => {
   const currentQuestionData =
     interviewQuestions[currentQuestion - 1];
 
   const newAnswer = {
-    questionId: currentQuestionData.id,
-    question: currentQuestionData.question,
-    answer: "Demo user response",
-  };
+  questionId: currentQuestionData.id,
+  question: currentQuestionData.question,
+  category: currentQuestionData.category,
+  difficulty: currentQuestionData.difficulty,
+  answer: "Demo user response",
+  answerDuration: 0,
+  answeredAt: new Date().toISOString(),
+};
 
 
   setInterviewSession((prev) => ({
@@ -201,6 +212,17 @@ setIsInterviewEnded(true);
             <p>
               Question {currentQuestion} of {totalQuestions}
             </p>
+            <div className="question-info">
+  <span>
+    <strong>Category:</strong>{" "}
+    {currentQuestionData.category}
+  </span>
+
+  <span>
+    <strong>Difficulty:</strong>{" "}
+    {currentQuestionData.difficulty}
+  </span>
+</div>
           </div>
 
           <div className="header-right">

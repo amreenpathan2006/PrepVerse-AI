@@ -185,3 +185,17 @@
 .next-question-button:active {
   transform: translateY(0);
 }
+.question-info {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #b8b8b8;
+  flex-wrap: wrap;
+}
+
+.question-info span {
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+}
