@@ -1,14 +1,18 @@
 import "./InterviewRoom.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import Card from "../Card/Card";
 import AIInterviewer from "../AIInterviewer/AIInterviewer";
 import VoiceControls from "../VoiceControls/VoiceControls";
 import EndInterviewModal from "../EndInterviewModal/EndInterviewModal";
 import InterviewResults from "../InterviewResults/InterviewResults";
+import useInterviewTimer from "../../hooks/useInterviewTimer";
 import levelOneQuestions from "../data/interviewQuestions";
 import levelTwoQuestions from "../data/levelTwoQuestions";
 import { generateQuestions } from "../../utils/questionGenerator";
+import useQuestionProgress from "../../hooks/useQuestionProgress";
+import { saveInterviewSession } from "../../utils/interviewStorage";
+
 
 function InterviewRoom({ level }) {
  const baseQuestions =
@@ -42,12 +46,15 @@ const interviewQuestions = generateQuestions(baseQuestions);
   const [isMuted, setIsMuted] = useState(false);
   const [isListening, setIsListening] = useState(true);
   const [status, setStatus] = useState("Listening");
-
   const aiState = isMuted ? "ready" : "listening";
-  const [timeLeft, setTimeLeft] = useState(15 * 60);
   const [isPaused, setIsPaused] = useState(false);
   const [showEndConfirmation, setShowEndConfirmation] = useState(false);
   const [isInterviewEnded, setIsInterviewEnded] = useState(false);
+  const { timeLeft, formattedTime } = useInterviewTimer(
+  15 * 60,
+  isPaused,
+  isInterviewEnded
+);
 
   // -----------------------------
   // Handlers
@@ -72,65 +79,31 @@ const interviewQuestions = generateQuestions(baseQuestions);
     endTime: new Date(),
   };
 
-  sessionStorage.setItem(
-    "interviewSession",
-    JSON.stringify(completedSession)
-  );
+  saveInterviewSession(completedSession);
 
   setInterviewSession(completedSession);
   setIsInterviewEnded(true);
 };
   
-
-  // -----------------------------
-  // Timer
-  // -----------------------------
-  useEffect(() => {
-    if (isPaused || isInterviewEnded) return;
-
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 0) {
-          clearInterval(timer);
-          return 0;
-        }
-
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [isPaused, isInterviewEnded]);
   
-
-  // -----------------------------
-  // Time Formatting
-  // -----------------------------
-  const minutes = String(Math.floor(timeLeft / 60)).padStart(2, "0");
-  const seconds = String(timeLeft % 60).padStart(2, "0");
-
   // -----------------------------
   // Question Progress
   // -----------------------------
   
-  const [currentQuestion, setCurrentQuestion] = useState(1);
-
 const totalQuestions = interviewQuestions.length;
 
+const {
+  currentQuestionIndex,
+  nextQuestion,
+  progress,
+} = useQuestionProgress(totalQuestions);
+
 const currentQuestionData =
-  interviewQuestions[currentQuestion - 1];
-
-const completedQuestions = currentQuestion - 1;
-
-const remainingQuestions =
-  totalQuestions - completedQuestions;
-
-const progress =
-  (completedQuestions / totalQuestions) * 100;
+  interviewQuestions[currentQuestionIndex];
 
 const handleNextQuestion = () => {
-  const currentQuestionData =
-    interviewQuestions[currentQuestion - 1];
+ const currentQuestionData =
+  interviewQuestions[currentQuestionIndex];
 
   const newAnswer = {
   questionId: currentQuestionData.id,
@@ -148,8 +121,8 @@ const handleNextQuestion = () => {
     answers: [...prev.answers, newAnswer],
   }));
 
-  if (currentQuestion < totalQuestions) {
-    setCurrentQuestion((prev) => prev + 1);
+  if (currentQuestionIndex < totalQuestions - 1) {
+  nextQuestion();
   } else {
     const completedSession = {
   ...interviewSession,
@@ -160,10 +133,7 @@ const handleNextQuestion = () => {
   endTime: new Date(),
 };
 
-sessionStorage.setItem(
-  "interviewSession",
-  JSON.stringify(completedSession)
-);
+saveInterviewSession(completedSession);
 
 setInterviewSession(completedSession);
 setIsInterviewEnded(true);
@@ -180,7 +150,6 @@ setIsInterviewEnded(true);
     />
   );
 }
-
   // -----------------------------
   // Interview Room
   // -----------------------------
@@ -210,7 +179,7 @@ setIsInterviewEnded(true);
 </h2>
 
             <p>
-              Question {currentQuestion} of {totalQuestions}
+              Question {currentQuestionIndex + 1} of {totalQuestions}
             </p>
             <div className="question-info">
   <span>
@@ -227,7 +196,7 @@ setIsInterviewEnded(true);
 
           <div className="header-right">
             <span>
-              {minutes}:{seconds}
+              {formattedTime}
             </span>
           </div>
 
@@ -255,7 +224,7 @@ setIsInterviewEnded(true);
               Hello! Welcome to PrepVerse AI.
               <br />
               <br />
-              {currentQuestionData.question}
+              {currentQuestionData.aiPrompt}
             </p>
 
           </div>
@@ -296,7 +265,7 @@ setIsInterviewEnded(true);
                  className="next-question-button"
                   onClick={handleNextQuestion}
                       >
-                {currentQuestion === totalQuestions
+                 {currentQuestionIndex + 1 === totalQuestions
                 ? "Finish Interview"
                 : "Submit Answer & Continue"}
               </button>

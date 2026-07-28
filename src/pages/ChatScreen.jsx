@@ -26,7 +26,7 @@ Let's discover the best career path for you. 🚀`,
     {
       id: 2,
       sender: "ai",
-      text: careerQuestions[0],
+      text: careerQuestions[0].question,
     },
   ]);
 
@@ -54,7 +54,7 @@ Let's discover the best career path for you. 🚀`,
     setMessages((prev) => [...prev, userMessage]);
     setUserAnswers((prev) => [...prev, input]);
 
-    const nextQuestion = careerQuestions[currentQuestion];
+    const nextQuestion = careerQuestions[currentQuestion]?.question;
 
     if (nextQuestion) {
       setIsTyping(true);
