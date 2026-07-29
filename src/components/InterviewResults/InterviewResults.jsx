@@ -38,6 +38,13 @@ function InterviewResults({ interviewSession }) {
   const seconds = String(
     durationInSeconds % 60
   ).padStart(2, "0");
+  const evaluation = interviewSession.evaluation;
+
+const confidenceScore =
+  evaluation?.percentage ?? 0;
+
+const feedback =
+  evaluation?.feedback ?? [];
 
   return (
     <div className="interview-results">
@@ -73,13 +80,39 @@ function InterviewResults({ interviewSession }) {
           </span>
         </div>
 
-        <div className="result-card">
-          <span className="result-value">--</span>
+       <div className="result-card">
+  <span className="result-value">
+    {confidenceScore}%
+  </span>
 
-          <span className="result-label">
-            Confidence Score
-          </span>
-        </div>
+  <span className="result-label">
+    Confidence Score
+  </span>
+</div>
+<div className="feedback-section">
+
+  <h2>AI Interview Feedback</h2>
+
+  {feedback.map((item, index) => (
+    <div
+      key={index}
+      className="feedback-card"
+    >
+      <h3>
+        Question {index + 1}
+      </h3>
+
+      <p>
+        <strong>Score:</strong> {item.score}/10
+      </p>
+
+      <p>
+        {item.comment}
+      </p>
+    </div>
+  ))}
+
+</div>
 
       </div>
 

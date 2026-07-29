@@ -12,7 +12,7 @@ import levelTwoQuestions from "../data/levelTwoQuestions";
 import { generateQuestions } from "../../utils/questionGenerator";
 import useQuestionProgress from "../../hooks/useQuestionProgress";
 import { saveInterviewSession } from "../../utils/interviewStorage";
-
+import { evaluateInterview } from "../../utils/evaluationEngine";
 
 function InterviewRoom({ level }) {
  const baseQuestions =
@@ -124,13 +124,18 @@ const handleNextQuestion = () => {
   if (currentQuestionIndex < totalQuestions - 1) {
   nextQuestion();
   } else {
-    const completedSession = {
+   const finalAnswers = [
+  ...interviewSession.answers,
+  newAnswer,
+];
+
+const evaluation = evaluateInterview(finalAnswers);
+
+const completedSession = {
   ...interviewSession,
-  answers: [
-    ...interviewSession.answers,
-    newAnswer,
-  ],
+  answers: finalAnswers,
   endTime: new Date(),
+  evaluation,
 };
 
 saveInterviewSession(completedSession);
