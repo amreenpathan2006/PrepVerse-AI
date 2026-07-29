@@ -1,5 +1,5 @@
 import "./InterviewRoom.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Card from "../Card/Card";
 import AIInterviewer from "../AIInterviewer/AIInterviewer";
@@ -14,6 +14,7 @@ import useQuestionProgress from "../../hooks/useQuestionProgress";
 import { saveInterviewSession } from "../../utils/interviewStorage";
 import { evaluateInterview } from "../../utils/evaluationEngine";
 import { evaluateAnswer } from "../../utils/evaluateAnswer";
+import { speakText, stopSpeaking } from "../../utils/speech";
 
 function InterviewRoom({ level }) {
  const baseQuestions =
@@ -73,6 +74,7 @@ const interviewQuestions = generateQuestions(baseQuestions);
   };
 
   const handleConfirmEndInterview = () => {
+    stopSpeaking();
   setShowEndConfirmation(false);
 
   const completedSession = {
@@ -101,7 +103,28 @@ const {
 
 const currentQuestionData =
   interviewQuestions[currentQuestionIndex];
+ useEffect(() => {
+  if (isPaused) {
+    stopSpeaking();
+    return;
+  }
 
+  if (!currentQuestionData) return;
+
+  if (currentQuestionIndex === 0) {
+  speakText(
+    `Hello! Welcome to your mock interview. I'm your AI interviewer. Let's begin. ${currentQuestionData.question}`
+  );
+} else {
+  speakText(
+    `Thank you. Let's move to the next question. ${currentQuestionData.question}`
+  );
+}
+
+  return () => {
+    stopSpeaking();
+  };
+}, [currentQuestionIndex, isPaused]);
 const handleNextQuestion = () => {
  const currentQuestionData =
   interviewQuestions[currentQuestionIndex];
