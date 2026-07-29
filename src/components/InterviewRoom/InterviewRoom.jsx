@@ -13,6 +13,7 @@ import { generateQuestions } from "../../utils/questionGenerator";
 import useQuestionProgress from "../../hooks/useQuestionProgress";
 import { saveInterviewSession } from "../../utils/interviewStorage";
 import { evaluateInterview } from "../../utils/evaluationEngine";
+import { evaluateAnswer } from "../../utils/evaluateAnswer";
 
 function InterviewRoom({ level }) {
  const baseQuestions =
@@ -105,14 +106,22 @@ const handleNextQuestion = () => {
  const currentQuestionData =
   interviewQuestions[currentQuestionIndex];
 
-  const newAnswer = {
+  const userAnswer = "Demo user response";
+
+const answerEvaluation = evaluateAnswer(
+  currentQuestionData.question,
+  userAnswer
+);
+
+const newAnswer = {
   questionId: currentQuestionData.id,
   question: currentQuestionData.question,
   category: currentQuestionData.category,
   difficulty: currentQuestionData.difficulty,
-  answer: "Demo user response",
+  answer: userAnswer,
   answerDuration: 0,
   answeredAt: new Date().toISOString(),
+  evaluation: answerEvaluation,
 };
 
 

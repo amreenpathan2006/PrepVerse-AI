@@ -38,17 +38,16 @@ function InterviewResults({ interviewSession }) {
   const seconds = String(
     durationInSeconds % 60
   ).padStart(2, "0");
+
   const evaluation = interviewSession.evaluation;
 
-const confidenceScore =
-  evaluation?.percentage ?? 0;
-
-const feedback =
-  evaluation?.feedback ?? [];
+  const confidenceScore =
+    evaluation?.percentage ?? 0;
 
   return (
     <div className="interview-results">
 
+      {/* Header */}
       <div className="results-header">
         <h1>Interview Completed</h1>
 
@@ -57,11 +56,13 @@ const feedback =
         </p>
       </div>
 
+      {/* Summary Cards */}
       <div className="results-summary">
 
         <div className="result-card">
           <span className="result-value">
-            {interviewSession.answers.length} /{" "}
+            {interviewSession.answers.length} /
+            {" "}
             {interviewSession.totalQuestions}
           </span>
 
@@ -80,42 +81,103 @@ const feedback =
           </span>
         </div>
 
-       <div className="result-card">
-  <span className="result-value">
-    {confidenceScore}%
-  </span>
+        <div className="result-card">
+          <span className="result-value">
+            {confidenceScore}%
+          </span>
 
-  <span className="result-label">
-    Confidence Score
-  </span>
-</div>
-<div className="feedback-section">
-
-  <h2>AI Interview Feedback</h2>
-
-  {feedback.map((item, index) => (
-    <div
-      key={index}
-      className="feedback-card"
-    >
-      <h3>
-        Question {index + 1}
-      </h3>
-
-      <p>
-        <strong>Score:</strong> {item.score}/10
-      </p>
-
-      <p>
-        {item.comment}
-      </p>
-    </div>
-  ))}
-
-</div>
+          <span className="result-label">
+            Confidence Score
+          </span>
+        </div>
 
       </div>
 
+      {/* AI Feedback */}
+      <div className="feedback-section">
+
+        <h2>AI Interview Feedback</h2>
+
+        <div className="feedback-grid">
+
+          {interviewSession.answers.map((answer, index) => (
+
+            <div
+              key={index}
+              className="feedback-card"
+            >
+
+              <h3>
+                Question {index + 1}
+              </h3>
+
+              <p>
+                <strong>Question:</strong>
+                {" "}
+                {answer.question}
+              </p>
+
+              <p>
+                <strong>Your Answer:</strong>
+                {" "}
+                {answer.answer}
+              </p>
+
+              <div className="feedback-top-row">
+
+                <div className="score-badge">
+                  {answer.evaluation?.score ?? 0}/100
+                </div>
+
+                <div
+                  className={`confidence-badge ${
+                    (answer.evaluation?.confidence ?? "Low").toLowerCase()
+                  }`}
+                >
+                  {answer.evaluation?.confidence ?? "Low"}
+                </div>
+
+              </div>
+
+              <div className="feedback-section-title strengths">
+                ✅ Strengths
+              </div>
+
+              <ul>
+                {(answer.evaluation?.strengths ?? []).map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
+
+              <div className="feedback-section-title weaknesses">
+                ⚠️ Weaknesses
+              </div>
+
+              <ul>
+                {(answer.evaluation?.weaknesses ?? []).map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
+
+              <div className="feedback-section-title suggestions">
+                💡 Suggestions
+              </div>
+
+              <ul>
+                {(answer.evaluation?.suggestions ?? []).map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      </div>
+
+      {/* Buttons */}
       <div className="results-actions">
 
         <button
