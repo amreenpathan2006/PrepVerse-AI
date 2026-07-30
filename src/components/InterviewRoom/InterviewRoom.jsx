@@ -15,6 +15,7 @@ import { saveInterviewSession } from "../../utils/interviewStorage";
 import { evaluateInterview } from "../../utils/evaluationEngine";
 import { evaluateAnswer } from "../../utils/evaluateAnswer";
 import { speakText, stopSpeaking } from "../../utils/speech";
+import { createSpeechRecognition } from "../../utils/speechRecognition";
 
 function InterviewRoom({ level }) {
  const baseQuestions =
@@ -57,6 +58,8 @@ const interviewQuestions = generateQuestions(baseQuestions);
   isPaused,
   isInterviewEnded
 );
+const [speechRecognition, setSpeechRecognition] = useState(null);
+const [liveTranscript, setLiveTranscript] = useState(""); 
 
   // -----------------------------
   // Handlers
@@ -76,6 +79,25 @@ const interviewQuestions = generateQuestions(baseQuestions);
   const handleConfirmEndInterview = () => {
     stopSpeaking();
   setShowEndConfirmation(false);
+
+const startListening = () => {
+  if (!speechRecognition) return;
+
+  setLiveTranscript("");
+  setIsListening(true);
+  setStatus("Listening");
+
+  speechRecognition.start();
+};
+
+const stopListening = () => {
+  if (!speechRecognition) return;
+
+  speechRecognition.stop();
+
+  setIsListening(false);
+  setStatus("Processing");
+};
 
   const completedSession = {
     ...interviewSession,
@@ -111,21 +133,51 @@ const currentQuestionData =
 
   if (!currentQuestionData) return;
 
-  if (currentQuestionIndex === 0) {
-  speakText(
-    `Hello! Welcome to your mock interview. I'm your AI interviewer. Let's begin. ${currentQuestionData.question}`
-  );
-} else {
-  speakText(
-    `Thank you. Let's move to the next question. ${currentQuestionData.question}`
-  );
-}
+  const text =
+  currentQuestionIndex === 0
+    ? `Hello! Welcome to your mock interview. I'm your AI interviewer. Let's begin. ${currentQuestionData.question}`
+    : `Thank you. Let's move to the next question. ${currentQuestionData.question}`;
+
+   speakText(text);
 
   return () => {
     stopSpeaking();
   };
 }, [currentQuestionIndex, isPaused]);
+useEffect(() => {
+    const recognition = createSpeechRecognition();
+
+    if (!recognition) {
+        console.warn("Speech Recognition is not supported in this browser.");
+        return;
+    }
+
+    setSpeechRecognition(recognition);
+}, []);
+useEffect(() => {
+    if (!speechRecognition) return;
+
+    speechRecognition.onresult = (event) => {
+        let transcript = "";
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+            transcript += event.results[i][0].transcript;
+        }
+
+        setLiveTranscript(transcript);
+    };
+
+    speechRecognition.onerror = (event) => {
+        console.error("Speech Recognition Error:", event.error);
+    };
+
+    return () => {
+        speechRecognition.onresult = null;
+        speechRecognition.onerror = null;
+    };
+}, [speechRecognition]);
 const handleNextQuestion = () => {
+  //stopListening();
  const currentQuestionData =
   interviewQuestions[currentQuestionIndex];
 
@@ -294,18 +346,28 @@ setIsInterviewEnded(true);
                 : status}
             </div>
               <VoiceControls
-                isMuted={isMuted}
-               isListening={isListening}
-               onToggleMute={handleToggleMute}
-             />
-             <button
-                 className="next-question-button"
-                  onClick={handleNextQuestion}
-                      >
-                 {currentQuestionIndex + 1 === totalQuestions
-                ? "Finish Interview"
-                : "Submit Answer & Continue"}
-              </button>
+  isMuted={isMuted}
+  isListening={isListening}
+  onToggleMute={handleToggleMute}
+/>
+
+{/* Temporary Speech Recognition Test */}
+<button
+  onClick={() => speechRecognition?.start()}
+>
+  Test Speech Recognition
+</button>
+
+<p>{liveTranscript}</p>
+
+<button
+  className="next-question-button"
+  onClick={handleNextQuestion}
+>
+  {currentQuestionIndex + 1 === totalQuestions
+    ? "Finish Interview"
+    : "Submit Answer & Continue"}
+</button>
            
 
           </div>
